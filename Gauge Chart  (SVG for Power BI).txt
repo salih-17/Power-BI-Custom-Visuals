@@ -1,0 +1,82 @@
+Gauge Chart SVG = 
+-- ══════════════════════════════════════════════════════════
+--  Developed by Abdurrahman Salih 
+--  LinkedIn account : https://www.linkedin.com/in/abdurrahman-salih/
+-- ══════════════════════════════════════════════════════════
+--  CONFIGURATION  — change these three variables only
+-- ══════════════════════════════════════════════════════════
+VAR _Progress    = MAX(Progress[Progress Line])
+VAR _Title       = "SALES GOAL"
+VAR _ColorLight  = "#00C0E8"    -- inner edge  (near gauge center)
+VAR _ColorDark   = "#0094B2"    -- outer edge  (far from center)
+-- ══════════════════════════════════════════════════════════
+
+VAR _Safe   = MAX( 0, MIN( 1, _Progress ) )
+VAR _Filled = ROUND( _Safe * 13, 0 )
+VAR _Label  = FORMAT( _Safe, "0%" )
+
+VAR _FC = "fill='url(#segGrad)'"   -- filled → gradient
+VAR _FE = "fill='url(#hatch)'"     -- empty  → hatch
+
+VAR _f1  = IF(  1 <= _Filled, _FC, _FE )
+VAR _f2  = IF(  2 <= _Filled, _FC, _FE )
+VAR _f3  = IF(  3 <= _Filled, _FC, _FE )
+VAR _f4  = IF(  4 <= _Filled, _FC, _FE )
+VAR _f5  = IF(  5 <= _Filled, _FC, _FE )
+VAR _f6  = IF(  6 <= _Filled, _FC, _FE )
+VAR _f7  = IF(  7 <= _Filled, _FC, _FE )
+VAR _f8  = IF(  8 <= _Filled, _FC, _FE )
+VAR _f9  = IF(  9 <= _Filled, _FC, _FE )
+VAR _f10 = IF( 10 <= _Filled, _FC, _FE )
+VAR _f11 = IF( 11 <= _Filled, _FC, _FE )
+VAR _f12 = IF( 12 <= _Filled, _FC, _FE )
+VAR _f13 = IF( 13 <= _Filled, _FC, _FE )
+
+VAR _T = "translate(250,265)"
+VAR _R = "translate(0,-175)"
+
+VAR _SVG =
+"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 500 295'>" &
+
+"<defs>" &
+
+  "<path id='seg' d='M -9,-28 L 9,-28 Q 16,-28 15.25,-21 L 10.75,21 Q 10,28 3,28 L -3,28 Q -10,28 -10.75,21 L -15.25,-21 Q -16,-28 -9,-28 Z'/>" &
+
+  -- Gradient: y=0% = top of segment = outer arc (dark), y=100% = bottom = inner arc (light)
+  -- objectBoundingBox makes it rotate with each segment automatically
+  "<linearGradient id='segGrad' x1='0' y1='0' x2='0' y2='1' gradientUnits='objectBoundingBox'>" &
+    "<stop offset='0%'   stop-color='" & _ColorDark  & "'/>" &
+    "<stop offset='100%' stop-color='" & _ColorLight & "'/>" &
+  "</linearGradient>" &
+
+  "<pattern id='hatch' x='0' y='0' width='8' height='8' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'>" &
+    "<rect width='8' height='8' fill='#CCF6FF'/>" &
+    "<line x1='0' y1='0' x2='0' y2='8' stroke='#cccccc' stroke-width='2.5'/>" &
+  "</pattern>" &
+
+"</defs>" &
+
+"<use href='#seg' xlink:href='#seg' " & _f1  & " transform='" & _T & " rotate(-90) " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f2  & " transform='" & _T & " rotate(-75) " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f3  & " transform='" & _T & " rotate(-60) " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f4  & " transform='" & _T & " rotate(-45) " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f5  & " transform='" & _T & " rotate(-30) " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f6  & " transform='" & _T & " rotate(-15) " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f7  & " transform='" & _T & " rotate(0)   " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f8  & " transform='" & _T & " rotate(15)  " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f9  & " transform='" & _T & " rotate(30)  " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f10 & " transform='" & _T & " rotate(45)  " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f11 & " transform='" & _T & " rotate(60)  " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f12 & " transform='" & _T & " rotate(75)  " & _R & "'/>" &
+"<use href='#seg' xlink:href='#seg' " & _f13 & " transform='" & _T & " rotate(90)  " & _R & "'/>" &
+
+"<text style='white-space:pre' xml:space='preserve' font-family='Arial,sans-serif' font-size='60' font-weight='bold' fill='#3CD3FE'>" &
+  "<tspan x='50%' y='232' text-anchor='middle'>" & _Label & "</tspan>" &
+"</text>" &
+"<text style='white-space:pre' xml:space='preserve' font-family='Arial,sans-serif' font-size='17' fill='#C7C7CC' letter-spacing='0.4em'>" &
+  "<tspan x='50%' y='258' text-anchor='middle'>" & _Title & "</tspan>" &
+"</text>" &
+
+"</svg>"
+
+RETURN _SVG
