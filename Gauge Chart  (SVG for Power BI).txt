@@ -5,7 +5,7 @@ Gauge Chart SVG =
 -- ══════════════════════════════════════════════════════════
 --  CONFIGURATION  — change these three variables only
 -- ══════════════════════════════════════════════════════════
-VAR _Progress    = MAX(Progress[Progress Line])
+VAR _Progress    =  [Your Progress Measure]   -- 0.0  →  1.0
 VAR _Title       = "SALES GOAL"
 VAR _ColorLight  = "#00C0E8"    -- inner edge  (near gauge center)
 VAR _ColorDark   = "#0094B2"    -- outer edge  (far from center)
